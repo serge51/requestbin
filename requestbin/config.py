@@ -16,6 +16,8 @@ STORAGE_BACKEND = "requestbin.storage.memory.MemoryStorage"
 MAX_RAW_SIZE = int(os.environ.get('MAX_RAW_SIZE', 1024*10))
 IGNORE_HEADERS = []
 MAX_REQUESTS = 20
+FILE_STORAGE = str(os.environ.get('FILE_STORAGE', '/tmp'))
+FILE_EXTENSION = ".txt"
 CLEANUP_INTERVAL = 3600
 
 REDIS_URL = ""

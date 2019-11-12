@@ -1,7 +1,8 @@
 import urllib
 from flask import session, redirect, url_for, escape, request, render_template, make_response
 
-from requestbin import app, db
+from requestbin import app, db, config
+from flask import send_from_directory
 
 def update_recent_bins(name):
     if 'recent' not in session:
@@ -60,4 +61,11 @@ def docs(name):
                 title=doc['title'],
                 recent=expand_recent_bins())
     else:
+        return "Not found", 404
+
+@app.endpoint('views.download')
+def download(fname):
+    try:
+        return send_from_directory(config.FILE_STORAGE, fname, as_attachment=False)
+    except:
         return "Not found", 404

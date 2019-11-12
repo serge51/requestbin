@@ -4,6 +4,7 @@ import time
 import datetime
 import os
 import re
+import uuid
 
 import msgpack
 
@@ -85,6 +86,17 @@ class Request(object):
             self.content_type = self.headers.get("Content-Type", "")
 
             self.raw = input.environ.get('raw')
+
+            if len(self.raw):
+                if not os.path.exists(config.FILE_STORAGE): os.makedirs(config.FILE_STORAGE)
+                fname = str(uuid.uuid4()) + config.FILE_EXTENSION
+                file = open(config.FILE_STORAGE + "/" + fname, "w+")
+                file.write(self.raw)
+                file.close()
+                self.link = fname
+            else:
+                self.link = None
+
             self.content_length = len(self.raw)
 
             # for header in self.ignore_headers:

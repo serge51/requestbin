@@ -25,7 +25,12 @@
             </div>
             <div class="span6 content">
               {% if request.content_type %}<i class="icon-code"></i>{% endif %} {{request.content_type}}<br>
-              <i class="icon-cloud-upload"></i> {{request.content_length|friendly_size}}
+              {% if request.link is not none %}
+                <a class="icon-cloud-upload" href="/download/{{request.link}}"></a>
+              {% else %}
+                <i class="icon-cloud-upload"></i>
+              {% endif %}
+              {{request.content_length|friendly_size}}
             </div>
             <div class="span2" class="timestamp">
               <span title="{{request.time|exact_time}}">{{request.time|approximate_time}} ago
